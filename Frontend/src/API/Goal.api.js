@@ -1,11 +1,11 @@
 import axios from "axios";
-import { store } from "../Store/Store";
-import { removeUser } from "../Slices/AuthSlice";
+import { store } from '../Store/Store';
+import { removeUser } from '../Slices/AuthSlice';
 
 const baseURI = axios.create({
-    baseURL : import.meta.env.VITE_EXP_API_URL,
-    withCredentials : true
-})
+    baseURL: import.meta.env.VITE_GOAL_API_URL,
+    withCredentials: true
+});
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -61,14 +61,17 @@ baseURI.interceptors.response.use(
     }
 );
 
-const addExpense = async (data) => await baseURI.post('/add', data)
+const addGoal = async (data) => await baseURI.post('/create', data);
 
-const allExpenses = async () => await baseURI.get('/getAll');
+const updateGoal = async (data) => await baseURI.put('/update', data);
 
-const deleteExpense = async (data) => await baseURI.get(`/delete/${data}`);
+const deleteGoalAPI = async (data) => await baseURI.delete(`/delete/:${data}`);
+
+const getAllGoal = async () => await baseURI.get('/getAll')
 
 export {
-    addExpense,
-    allExpenses,
-    deleteExpense
+    addGoal,
+    updateGoal,
+    deleteGoalAPI,
+    getAllGoal
 }

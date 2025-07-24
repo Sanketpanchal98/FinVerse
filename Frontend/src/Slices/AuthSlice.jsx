@@ -31,6 +31,13 @@ const userSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+    updateUser: (state, action) => {      
+      state.user = action.payload,
+      state.isAuthenticated = true;
+    },
+    updateEmail: (state, action) => {
+      state.user.email = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -52,5 +59,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { addUser, removeUser } = userSlice.actions;
+export const { addUser, removeUser, updateUser, updateEmail } = userSlice.actions;
 export default userSlice.reducer;

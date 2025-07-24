@@ -15,29 +15,37 @@ import FinGoals from './Dashboard-comp/FinGoals.jsx'
 import Autopay from './Dashboard-comp/Autopay.jsx'
 import Calculators from './Dashboard-comp/Calculators.jsx'
 import SettingsProf from './Dashboard-comp/SettingsProf.jsx'
+import { ErrorBoundary } from 'react-error-boundary'
+import CustomErrorFallback from './components/CustomErrorFallback.jsx'
+import ResetPass from './components/ResetPass.jsx'
+import ResetEmail from './components/ResetEmail.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ErrorBoundary FallbackComponent={CustomErrorFallback} >
       {/* <NavigationProvider> */}
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='/auth' element={<Authentication />} />
-            <Route element={<RootEndPoint><ProtectedRoutes /></RootEndPoint>}>
-              <Route path="/dashboard" element={<Dashboard />} >
-                <Route index element={<ExpensesData />} />
-                <Route path='/dashboard/visualization' element={<ChartVisualization />}/>
-                <Route path='/dashboard/goal' element={<FinGoals />}/>
-                <Route path='/dashboard/autopay' element={<Autopay />}/>
-                <Route path='/dashboard/calculators' element={<Calculators />}/>
-                <Route path='/dashboard/settings' element={<SettingsProf />}/>
-              </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<App />} />
+          <Route path='/auth' element={<Authentication />} />
+          <Route element={<RootEndPoint><ProtectedRoutes /></RootEndPoint>}>
+            <Route path="/dashboard" element={<Dashboard />} >
+              <Route index element={<ExpensesData />} />
+              <Route path='/dashboard/visualization' element={<ChartVisualization />} />
+              <Route path='/dashboard/goal' element={<FinGoals />} />
+              <Route path='/dashboard/autopay' element={<Autopay />} />
+              <Route path='/dashboard/calculators' element={<Calculators />} />
+              <Route path='/dashboard/settings' element={<SettingsProf />} />
+              <Route path='/dashboard/resetpassword' element={<ResetPass />} />
+              <Route path='/dashboard/resetemail' element={<ResetEmail />} />
             </Route>
-          </Routes>
-        </BrowserRouter>
-      {/* </NavigationProvider> */}
-    </Provider>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
+    {/* </NavigationProvider> */}
+  </Provider>
   // </StrictMode>,
 )

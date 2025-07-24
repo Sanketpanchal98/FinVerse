@@ -34,10 +34,17 @@ app.use(AuthMiddleware)
 import userProtectedroute from './Routes/user.protected.routes.js'
 import expenseRoute from './Routes/expense.routes.js'
 import errorMiddleware from './Middlewares/errorMiddleware.js';
+import autopayRoutes from './Routes/autopay.routes.js';
+import goalRouter from './Routes/goal.routes.js'
 
 app.use('/api/v1/user/pro' ,userProtectedroute);
 
 app.use('/api/v1/exp', expenseRoute)
 
-// app.use(errorMiddleware)
+app.use('/api/v1/autopay', autopayRoutes);
+
+app.use('/api/v1/goal', goalRouter)
+
+app.use(errorMiddleware)
+
 export default app;

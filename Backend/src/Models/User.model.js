@@ -17,6 +17,22 @@ const UserSchema = new Schema({
     },
     refreshToken : {
         type : String
+    },
+    avatar : {
+        type : String
+    },
+    gender : {
+        type : String,
+        enum : ['Male', 'Female', 'Others']
+    },
+    dob: {
+        type : Date,
+    },
+    phoneNo : {
+        type : Number
+    },
+    address : {
+        type : String
     }
 
 },{

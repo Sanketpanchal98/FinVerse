@@ -3,7 +3,7 @@ import { store } from "../Store/Store";
 import { removeUser } from "../Slices/AuthSlice";
 
 const baseURI = axios.create({
-    baseURL : import.meta.env.VITE_EXP_API_URL,
+    baseURL : import.meta.env.VITE_AUTOPAY_API_URL,
     withCredentials : true
 })
 
@@ -61,14 +61,25 @@ baseURI.interceptors.response.use(
     }
 );
 
-const addExpense = async (data) => await baseURI.post('/add', data)
+const addAutopay = async (data) => await baseURI.post('/create' , data, {
+    withCredentials : true
+})
 
-const allExpenses = async () => await baseURI.get('/getAll');
+const removeAutopay = async (data) => await baseURI.get(`/delete/${data}` , {
+    withCredentials : true
+})
 
-const deleteExpense = async (data) => await baseURI.get(`/delete/${data}`);
+const editAutopay = async (autopayId, data) => await baseURI.post(`/edit/${autopayId}`, data, {
+    withCredentials : true
+})
+
+const fetchAll = async () => await baseURI.get('/all', {
+    withCredentials : true
+})
 
 export {
-    addExpense,
-    allExpenses,
-    deleteExpense
+    addAutopay,
+    removeAutopay,
+    editAutopay,
+    fetchAll
 }

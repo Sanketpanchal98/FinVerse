@@ -3,7 +3,7 @@ import { store } from '../Store/Store';
 import { removeUser } from '../Slices/AuthSlice';
 
 const baseURI = axios.create({
-    baseURL: 'http://localhost:5000/api/v1/user',
+    baseURL: import.meta.env.VITE_USER_PRO_API_URL,
     withCredentials: true
 });
 
@@ -23,10 +23,11 @@ baseURI.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config;
-        // console.log("this is ", originalRequest);
-
+        
+        // console.log(error.response.data.error.statusCode);
         if (
-            error.response?.status === 401 &&
+            
+            error.response.data.error.statusCode === 401 &&
             !originalRequest._retry &&
             originalRequest.url !== "/refresh-token"
         ) {
@@ -76,9 +77,24 @@ const userLogout = async () => await baseURI.get('/pro/logout', {
     withCredentials: true
 });
 
+const passwordUpdate = async (data) => await baseURI.post('/pro/updatepass', data, {
+    withCredentials : true
+});
+
+const dataUpdate = async (data) => await baseURI.post('/pro/update', data, {
+    withCredentials : true
+})
+
+const emailUpdate = async (data) => await baseURI.post('/pro/updatemail', data, {
+    withCredentials : true
+})
+
 export {
     userLogin,
     userRegister,
     userLogout,
-    userRootReq
+    userRootReq,
+    passwordUpdate,
+    dataUpdate,
+    emailUpdate
 }

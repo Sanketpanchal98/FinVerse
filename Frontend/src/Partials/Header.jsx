@@ -97,7 +97,7 @@ const Header = () => {
           }`}>
           <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
           <a href="#features" onClick={() => setIsOpen(false)}>Features</a>
-          <Link to="/auth" onClick={() => setIsOpen(false)}>Login/Register</Link>
+          <Link to="/dashboard" onClick={() => setIsOpen(false)}>Login/Register</Link>
           <a href="#contact" onClick={() => setIsOpen(false)}>Contact Us</a>
         </div>
       )}

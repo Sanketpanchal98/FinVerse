@@ -6,7 +6,7 @@ const Profile_Nav = () => {
     const user = useSelector((state) => state.user.user);
     const theme = useSelector((state) => state.theme.theme);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+    
     const navItems = [
         { to: '/dashboard', icon: 'ri-add-line', label: 'Add Expense', shortLabel: 'Add' },
         { to: '/dashboard/visualization', icon: 'ri-bar-chart-box-line', label: 'Visualization', shortLabel: 'Charts' },
@@ -24,9 +24,9 @@ const Profile_Nav = () => {
             } transition-all duration-500 flex-col h-[640px]`}>
                 <div className="flex flex-col items-center gap-3">
                     <img
-                        src={user?.avatar || 'https://api.dicebear.com/6.x/initials/svg?seed=FinVerse'}
+                        src={user?.avatar || `/ProfilePhotos/${user?.data?.avatar}.png`}
                         alt="profile"
-                        className="w-24 h-24 rounded-full border-4 border-green-500 object-cover"
+                        className="w-32 h-32 rounded-full border-2 border-green-500 object-cover"
                     />
                     <h2 className="text-xl font-bold">{user?.data?.name || 'Anonymous'}</h2>
                     <p className="text-sm text-gray-500 dark:text-gray-300">{user?.data?.email || 'Email not set!'}</p>
@@ -54,7 +54,7 @@ const Profile_Nav = () => {
                 <div className="flex items-center justify-between p-4">
                     <div className="flex items-center gap-3">
                         <img
-                            src={user?.avatar || 'https://api.dicebear.com/6.x/initials/svg?seed=FinVerse'}
+                            src={user?.avatar || `/ProfilePhotos/${user?.data?.avatar}.png`}
                             alt="profile"
                             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-green-500 object-cover"
                         />

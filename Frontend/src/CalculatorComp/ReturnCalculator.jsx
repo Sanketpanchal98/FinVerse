@@ -53,7 +53,7 @@ const ReturnCalculator = () => {
                     <input
                         type="number"
                         value={sip}
-                        className={`w-full sm:w-60 border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
+                        className={`remove-arrow w-full sm:w-60 border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
                         onChange={(e) => setSIP(e.target.value)}
                     />
                     <input
@@ -62,6 +62,7 @@ const ReturnCalculator = () => {
                         max={50000}
                         min={0}
                         step={500}
+                        value={sip}
                         className='accent-green-400 w-full'
                     />
                 </section>
@@ -72,7 +73,7 @@ const ReturnCalculator = () => {
                         <label className='text-sm sm:text-base font-medium'>Duration (in years)</label>
                         <input
                             type="number"
-                            className={`w-full border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
+                            className={`remove-arrow w-full border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
                             placeholder='e.g., 5'
                             onChange={(e) => setDuration(e.target.value)}
                         />
@@ -82,7 +83,7 @@ const ReturnCalculator = () => {
                         <label className='text-sm sm:text-base font-medium'>Expected Annual Return (%)</label>
                         <input
                             type="number"
-                            className={`w-full border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
+                            className={`remove-arrow w-full border-2 rounded-xl px-4 py-2 focus:border-green-300 focus:outline-none ${theme ? 'bg-light-surface text-light-text' : 'bg-dark-surface text-dark-text'}`}
                             placeholder='e.g., 12'
                             onChange={(e) => setIntereset(e.target.value)}
                         />

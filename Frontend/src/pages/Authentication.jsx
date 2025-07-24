@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../Slices/AuthSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useErrorBoundary } from "react-error-boundary";
 
 const Authentication = () => {
+  const [error, setError] = useState();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setLoading] = useState(false)
   const [name, setName] = useState("");
@@ -15,6 +17,7 @@ const Authentication = () => {
 
   const toggleForm = () => setIsLogin(!isLogin);
   const navigate = useNavigate()
+  const {showBoundary} = useErrorBoundary()
 
   const dispatch = useDispatch()
   const { isAuthenticated, user } = useSelector(state => state.user)
@@ -30,18 +33,24 @@ const Authentication = () => {
     setLoading(true)
     let res;
     try {
-      const data = {
+      const data = isLogin ? {
         name: name,
         password: password
       }
-
+      : {
+        name: name,
+        password : password,
+        email : email
+      }
+      
       if (isLogin) {
         res = await userLogin(data)
-      } else {
-        res = await userRegister(data)
+      } else {        
+        res = await userRegister(data)        
       }
     } catch (error) {
-      console.log(error);
+      // showBoundary(error).
+      setError(error?.response?.data?.message)
 
     } finally {
       setLoading(false)
@@ -51,8 +60,6 @@ const Authentication = () => {
     return;
 
   }
-
-
 
   return isLoading ? <ArrowLoader /> : (
     <div className="flex h-screen w-full overflow-hidden font-sans bg-[#ecf0f1] md:flex-row flex-col ">
@@ -132,7 +139,9 @@ const Authentication = () => {
                   Password
                 </label>
               </div>
-
+            {
+              error && <div className="font-semibold text-red-500">{error}</div>
+            }
               <button
                 type="submit"
                 className="w-full bg-[#2c3e50] text-white p-3 rounded-3xl hover:bg-[#34495e]"
@@ -207,6 +216,7 @@ const Authentication = () => {
                   id="email"
                   placeholder=" "
                   value={email}
+                  required
                   className="peer w-full bg-transparent placeholder:text-transparent text-slate-700 text-sm border border-slate-200 rounded-xl px-6 py-4 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-md focus:shadow"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -217,7 +227,7 @@ const Authentication = () => {
                     peer-focus:-top-2 peer-focus:left-6 peer-focus:text-xs peer-focus:text-slate-400 peer-focus:scale-90
                     peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:left-6 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-slate-400 peer-[:not(:placeholder-shown)]:scale-90"
                 >
-                  Email (optional)
+                  Email
                 </label>
               </div>
 

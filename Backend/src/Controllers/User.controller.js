@@ -5,6 +5,17 @@ import { User } from '../Models/User.model.js'
 import { accessTokenOptions, refreshTokenOptions } from '../Constants/cookieOptions.js'
 import jwt from 'jsonwebtoken'
 
+const filterObj = (obj, ...allowedFields) => {
+    
+    let newObj = {};
+    for( let key in obj ){
+        if(allowedFields.includes(key)){        
+            newObj[key] = obj[key]
+        }
+    }
+    return newObj
+}
+
 const RefreshAccessTokenGeneration = async (id) => {
 
     const user = await User.findById(id);
@@ -12,7 +23,7 @@ const RefreshAccessTokenGeneration = async (id) => {
     const refreshToken = await user.refreshTokenGen();
     const accessToken = await user.accessTokenGen();
     
-    if(!refreshToken || !accessToken) throw new ErrorHandler(500 , "Token Generation failed : token generation function")
+    if(!refreshToken || !accessToken) throw new ErrorHandler(500 , "Token Generation failed")
 
     user.refreshToken = refreshToken;
     await user.save({validateBeforeSave : false});
@@ -25,20 +36,22 @@ const RefreshAccessTokenGeneration = async (id) => {
 }
 
 const UserRegister = AsyncHandler ( async (req , res) => {
-
+    
     const { name, password, email } = req.body    
-
+    
     if(!name || !password){
-        throw new ErrorHandler(400 , "All info Required : userregister")
+        throw new ErrorHandler(400 , "All info Required")
     }
-
+    
     const user = await User.create({
         name,
-        password
+        password,
+        email,
+        avatar : "prof1"
     })
 
 
-    if(!user) throw new ErrorHandler(500, "user creation failed : userregister")
+    if(!user) throw new ErrorHandler(500, "User creation failed")
 
     const {accessToken,refreshToken } = await RefreshAccessTokenGeneration(user._id);
 
@@ -65,11 +78,11 @@ const UserLogin = AsyncHandler( async (req , res) => {
     
     const user = await User.findOne({name});
     
-    if(!user) throw new ErrorHandler(404 , "user not found : userlogin");
+    if(!user) throw new ErrorHandler(404 , "User not found");
 
     const result = await user.passwordVerification(password);
 
-    if(!result) throw new ErrorHandler(400 , "password incorrect : userlogin");
+    if(!result) throw new ErrorHandler(400 , "Password Incorrect");
 
     const {accessToken,refreshToken } = await RefreshAccessTokenGeneration(user._id);
 
@@ -93,7 +106,7 @@ const UserInfo = AsyncHandler(async (req ,res) => {
     const user = await User.findById(userId).select("-password -refreshToken");
 
     if(!user){
-        new ResponseHandler(200, "user not logged in", null)
+        new ResponseHandler(200, "User not Logged In", null)
     }
 
     res.status(200)
@@ -117,23 +130,23 @@ const UserLogOut = AsyncHandler( async (req , res) => {
 const accessTokenRefresh = AsyncHandler( async( req , res) => {    
     
     const { RefreshToken } = req.cookies;
-
+    
     if(!RefreshToken){
-        throw new ErrorHandler(401, 'Unauthorized RefreshToken : accestokenrefresh');
+        throw new ErrorHandler(401, 'Unauthorized RefreshToken');
     }
-
+    
     const decodedToken = await jwt.verify(RefreshToken, process.env.REFRESH_TOKEN_SECRET);
-
+    
     const user = await User.findById(decodedToken.id);
-
+    
     if(!user){
-        throw new ErrorHandler(401, "refresh changed : accesstokenrefresh")
+        throw new ErrorHandler(401, "refresh changed")
     };
-
+    
     if(user.refreshToken != RefreshToken){
         throw new ErrorHandler(401, 'refresh Token altered ; 136');
     }
-
+    
     const {refreshToken, accessToken} = await RefreshAccessTokenGeneration(user._id);
     
     const userObj = user.toObject();
@@ -149,10 +162,102 @@ const accessTokenRefresh = AsyncHandler( async( req , res) => {
 
 })
 
+const UserProfUpdate = AsyncHandler ( async (req, res) => {
+
+    const obj = filterObj(req.body, "name", "avatar", "gender", "dob","phoneNo", "address", "email")    
+
+    const userId = req.user;
+    
+    const user = await User.findByIdAndUpdate(userId , obj);
+
+    const userObj = await User.findById(user);
+    
+    if(!userObj){
+        throw new ErrorHandler(404, "User not found")
+    }
+
+    res.status(200)
+    .json(
+        new ResponseHandler(200, "User updated Success", userObj)
+    )
+
+})
+
+const UpdatePassword = AsyncHandler( async (req, res) => {
+
+    const { oldPassword, newPassword } = req.body;
+
+    if(!oldPassword || !newPassword){
+        throw new ErrorHandler(401 , "All fields required" )
+    }
+
+    const userId = req.user;
+
+    const user = await User.findById(userId);
+
+    if(!user){
+        throw new ErrorHandler(404, "User Not found")
+    }
+
+    const passwordVerification = await user.passwordVerification(oldPassword);
+
+    if(!passwordVerification){
+        throw new ErrorHandler(401, "Password is Incorrect")
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200)
+    .json(
+        new ResponseHandler(200, "password updated successfully")
+    )
+
+});
+
+const UpdateEmail = AsyncHandler( async (req, res) => {
+
+    const { newEmail, password, currentEmail } = req.body;
+
+    if(!newEmail && !password){
+        throw new ErrorHandler(401, "all fields required")
+    }
+
+    const userId = req.user;
+
+    const user = await User.findById(userId);
+
+    if(!user){
+        throw new ErrorHandler(404, "User Not found");
+    }
+
+    if(user.email !== currentEmail){
+        throw new ErrorHandler(401, "Current Email doesn't match")
+    }
+
+    const passwordVerification = await user.passwordVerification(password);
+
+    if(!passwordVerification){
+        throw new ErrorHandler(401, "Password Doesn't Match");
+    }
+
+    user.email = newEmail;
+    await user.save();
+
+    res.status(200)
+    .json(
+        new ResponseHandler(200, "User Email Updated Successfully")
+    )
+
+})
+
 export {
     UserRegister,
     UserLogin,
     UserInfo,
     UserLogOut,
-    accessTokenRefresh
+    accessTokenRefresh,
+    UserProfUpdate,
+    UpdatePassword,
+    UpdateEmail
 }
