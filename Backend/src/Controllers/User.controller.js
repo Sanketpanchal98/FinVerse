@@ -290,11 +290,11 @@ const googleAuth = AsyncHandler(async (req, res) => {
       .cookie('AccessToken', accessToken, accessTokenOptions)
       .cookie('RefreshToken', refreshToken, refreshTokenOptions)
     //   .json(new ResponseHandler(200, "User logged in", userObj))
-      .redirect('http://localhost:5173/dashboard')
+      .redirect(`${process.env.FRONTEND_URL}/dashboard`)
 
   } catch (error) {
     console.error('Google callback error:', error);
-    res.redirect(`http://localhost:5173/login`);
+    res.redirect(`${process.env.FRONTEND_URL}/auth`);
   }
 });
 
