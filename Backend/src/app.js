@@ -44,7 +44,6 @@ import expenseRoute from './Routes/expense.routes.js'
 import errorMiddleware from './Middlewares/errorMiddleware.js';
 import autopayRoutes from './Routes/autopay.routes.js';
 import goalRouter from './Routes/goal.routes.js'
-import passport from './Utils/passport.js';
 
 app.use('/api/v1/user/pro' ,userProtectedroute);
 
