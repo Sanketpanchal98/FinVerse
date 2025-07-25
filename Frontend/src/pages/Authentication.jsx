@@ -59,7 +59,7 @@ const Authentication = () => {
     } finally {
       setLoading(false)
     }
-
+    
     dispatch(addUser(res.data))
     return;
 

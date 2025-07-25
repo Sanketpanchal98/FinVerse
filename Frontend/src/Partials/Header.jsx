@@ -20,7 +20,7 @@ const Header = () => {
         {/* Logo Section */}
         <div className="flex items-center gap-3">
           <img
-            src="public/Logo/FinVerse_New.png"
+            src="/Logo/FinVerse_New.png"
             alt="FinVerse Logo"
             className="w-12 rounded-full"
           />
