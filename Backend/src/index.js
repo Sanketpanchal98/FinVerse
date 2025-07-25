@@ -8,9 +8,8 @@ configDotenv({
 
 DataBaseConnection()
     .then(() => {
-        app.listen(process.env.PORT, () => {
-            console.log("Server Is Running on : " , process.env.PORT);
-        })
+        console.log('Database connected suucessfully');
+        
     })
     .catch((error) => {
         console.log('There is Error in index : ',error);
