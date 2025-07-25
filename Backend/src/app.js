@@ -30,29 +30,24 @@ app.get('/', (req, res) => {
 //User routes
 import userUnprotectedRoute from './Routes/user.unprotected.routes.js'
 import googleRoutes from './Routes/google.routes.js'
-app.use( '/api/v1/user', userUnprotectedRoute );
-app.use('/api/v1/auth', googleRoutes)
-
-//protected routes
-
-//user routes
-import AuthMiddleware from './Middlewares/Auth.js';
-app.use(AuthMiddleware)
-
 import userProtectedroute from './Routes/user.protected.routes.js'
 import expenseRoute from './Routes/expense.routes.js'
-import errorMiddleware from './Middlewares/errorMiddleware.js';
-import autopayRoutes from './Routes/autopay.routes.js';
+import autopayRoutes from './Routes/autopay.routes.js'
 import goalRouter from './Routes/goal.routes.js'
+import errorMiddleware from './Middlewares/errorMiddleware.js'
+import AuthMiddleware from './Middlewares/Auth.js'
 
-app.use('/api/v1/user/pro' ,userProtectedroute);
+// Unprotected routes
+app.use('/api/v1/user', userUnprotectedRoute)
+app.use('/api/v1/auth', googleRoutes)
 
-app.use('/api/v1/exp', expenseRoute)
+// Protected routes (middleware applied per route)
+app.use('/api/v1/user/pro', AuthMiddleware, userProtectedroute)
+app.use('/api/v1/exp', AuthMiddleware, expenseRoute)
+app.use('/api/v1/autopay', AuthMiddleware, autopayRoutes)
+app.use('/api/v1/goal', AuthMiddleware, goalRouter)
 
-app.use('/api/v1/autopay', autopayRoutes);
-
-app.use('/api/v1/goal', goalRouter)
-
+// Error handler
 app.use(errorMiddleware)
 
 export default app;
