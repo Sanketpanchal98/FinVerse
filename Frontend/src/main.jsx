@@ -19,6 +19,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import CustomErrorFallback from './components/CustomErrorFallback.jsx'
 import ResetPass from './components/ResetPass.jsx'
 import ResetEmail from './components/ResetEmail.jsx'
+import ForgotPassword from './pages/ForgotPassword.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/auth' element={<Authentication />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route element={<RootEndPoint><ProtectedRoutes /></RootEndPoint>}>
             <Route path="/dashboard" element={<Dashboard />} >
               <Route index element={<ExpensesData />} />

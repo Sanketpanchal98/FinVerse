@@ -14,16 +14,19 @@ app.use(express.json({limit : '40kb'}));
 
 
 app.use(cors({
-    origin : 'http://localhost:5173',
+    origin : process.env.FRONTEND_URL,
     credentials : true
 }))
 
-//UnProtected Routes
+app.use(passport.initialize())
 
+//UnProtected Routes
+// migrateExistingUsers()
 //User routes
 import userUnprotectedRoute from './Routes/user.unprotected.routes.js'
-
+import googleRoutes from './Routes/google.routes.js'
 app.use( '/api/v1/user', userUnprotectedRoute );
+app.use('/api/v1/auth', googleRoutes)
 
 //protected routes
 
@@ -36,6 +39,8 @@ import expenseRoute from './Routes/expense.routes.js'
 import errorMiddleware from './Middlewares/errorMiddleware.js';
 import autopayRoutes from './Routes/autopay.routes.js';
 import goalRouter from './Routes/goal.routes.js'
+import passport from './Utils/passport.js';
+import migrateExistingUsers from './DB/migrationDB.js';
 
 app.use('/api/v1/user/pro' ,userProtectedroute);
 

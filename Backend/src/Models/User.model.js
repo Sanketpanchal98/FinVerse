@@ -10,10 +10,27 @@ const UserSchema = new Schema({
     },
     email : {
         type : String,
+        required : true,
+        unique : true
     },
     password : {
         type : String,
-        required : true
+        required : function(){
+            return !this.googleId
+        }
+    },
+    googleId : {
+        type : String,
+        sparse : true
+    },
+    isEmailVerified : {
+        type : Boolean,
+        default : false
+    },
+    authProvider : {
+        type : String,
+        enum : ['local', 'google', 'both'],
+        default : 'local'
     },
     refreshToken : {
         type : String
