@@ -1,17 +1,21 @@
-import app from "./app.js";
-import { configDotenv } from "dotenv";
-import DataBaseConnection from "./DB/DataBase.js";
+import app from './app.js';
+import dotenv from 'dotenv';
+import DataBaseConnection from './DB/DataBase.js';
 
-configDotenv({
-    path: './.env'
-})
+dotenv.config();
 
-DataBaseConnection()
-    .then(() => {
-        console.log('Database connected suucessfully');
-        
-    })
-    .catch((error) => {
-        console.log('There is Error in index : ',error);
-        
-})
+let dbConnected = false;
+
+export default async function handler(req, res) {
+  try {
+    if (!dbConnected) {
+      await DataBaseConnection();
+      dbConnected = true;
+    }
+
+    return app(req, res);  // delegate to Express
+  } catch (err) {
+    console.error('Server error:', err);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
