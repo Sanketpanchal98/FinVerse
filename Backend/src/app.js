@@ -1,6 +1,7 @@
 import express, { json } from 'express';
 import cookieParser from 'cookie-parser';
-import cors from 'cors'
+import cors from 'cors';
+import passport from './Utils/passport.js'
 
 const app = express();
 
@@ -19,6 +20,10 @@ app.use(cors({
 }))
 
 app.use(passport.initialize())
+
+app.get('/', (req, res) => {
+    res.send('backend is perfect working')
+})
 
 //UnProtected Routes
 // migrateExistingUsers()
@@ -40,7 +45,6 @@ import errorMiddleware from './Middlewares/errorMiddleware.js';
 import autopayRoutes from './Routes/autopay.routes.js';
 import goalRouter from './Routes/goal.routes.js'
 import passport from './Utils/passport.js';
-import migrateExistingUsers from './DB/migrationDB.js';
 
 app.use('/api/v1/user/pro' ,userProtectedroute);
 
