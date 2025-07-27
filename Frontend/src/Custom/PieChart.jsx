@@ -45,7 +45,7 @@ const PieChart = ({ data }) => {
   };
 
   return (
-    <div className={`w-7/12 mx-auto p-4 rounded-xl ${theme ? "bg-light-surface text-light-text" : "bg-dark-surface"}`}>
+    <div className={`w-full mx-auto p-4 rounded-xl ${theme ? "bg-light-surface text-light-text" : "bg-dark-surface"}`}>
       <Pie data={pieData} options={pieOptions} />
     </div>
   );

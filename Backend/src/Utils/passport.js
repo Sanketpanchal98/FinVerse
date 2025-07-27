@@ -27,7 +27,6 @@ passport.use(new GoogleStrategy({
             // Link Google account to existing user
             user.googleId = profile.id;
             user.authProvider = user.authProvider === 'local' ? 'both' : 'google';
-            user.avatar = profile.photos[0].value;
             user.isEmailVerified = true;
             user.googleAccessToken = AccessToken;
             user.googleRefreshToken = RefreshToken;
@@ -41,7 +40,7 @@ passport.use(new GoogleStrategy({
         
         user = new User({
             googleId: profile.id,
-            name: profile.displayName,
+            name: profile.name.givenName,
             email: profile.emails[0].value,
             authProvider: 'google',
             isEmailVerified: true,

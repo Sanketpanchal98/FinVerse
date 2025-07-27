@@ -1,6 +1,7 @@
 import Lottie from "lottie-react";
 import coinAnimation from "../assets/man-graphs.json";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export function Hero() {
   const theme = useSelector((state) => state.theme.theme);
@@ -30,12 +31,14 @@ export function Hero() {
           Track expenses, analyze spending, and gain insights with AI-driven financial tools.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <button className="bg-[#27AE60] text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-all">
+          <Link className="bg-[#27AE60] text-white px-6 py-3 rounded-xl hover:bg-green-700 transition-all"
+          to={'/auth'}
+          >
             Start Tracking
-          </button>
-          <button className="bg-white text-[#2C3E50] px-6 py-3 rounded-xl border border-white hover:bg-gray-100 transition-all">
+          </Link>
+          {/* <button className="bg-white text-[#2C3E50] px-6 py-3 rounded-xl border border-white hover:bg-gray-100 transition-all">
             Try Calculator
-          </button>
+          </button> */}
         </div>
       </div>
 

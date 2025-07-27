@@ -152,7 +152,7 @@ const ChartVisualization = () => {
     const totalExpenses = expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
 
     return (
-        <div className={`w-full flex flex-col gap-4 transition-all duration-500 lg:h-[640px] overflow-auto ${theme ? 'bg-light-background text-dark' : 'bg-dark-background text-light'}`}>
+        <div className={`flex flex-col gap-4 transition-all duration-500 overflow-auto ${isFullscreen ? "h-screen w-screen" : "w-full lg:h-[640px]"} ${theme ? 'bg-light-background text-dark' : 'bg-dark-background text-light'}`}>
       {/* Add Expense Form */}
       <div className={`w-full rounded-xl shadow p-4 sm:p-6 ${theme ? 'bg-white text-[#0F172A]' : 'bg-[#1E293B] text-white'}`}>
                 

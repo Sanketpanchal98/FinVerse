@@ -1,7 +1,10 @@
 import express, { json } from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import passport from './Utils/passport.js'
+import passport from './Utils/passport.js';
+import helmet from 'helmet';
+import compression from 'compression';
+import xssClean from 'xss-clean'
 
 const app = express();
 
@@ -13,6 +16,13 @@ app.use(express.static('public'));
 
 app.use(express.json({limit : '40kb'}));
 
+app.use(helmet());
+
+app.use(compression({
+    threshold : 1024
+}))
+
+app.use(xssClean())
 
 app.use(cors({
     origin : process.env.FRONTEND_URL,

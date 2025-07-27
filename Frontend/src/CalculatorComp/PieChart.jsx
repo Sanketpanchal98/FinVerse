@@ -32,7 +32,7 @@ const SIPChart = ({ sip, interest, years, returnAmt, typeSIP }) => {
     labels,
     datasets: [
       {
-        label: 'Investment Growth',
+        label: 'Amount in Rs.',
         data: dataSet,
         fill: true,
         tension: 0.4,

@@ -29,7 +29,7 @@ const EMIChart = ({ emi, rate, downpayment, tenure, loanAmt }) => {
     labels,
     datasets: [
       {
-        label: 'Investment Growth',
+        label: 'Amount in Rs.',
         data: dataSet,
         fill: true,
         tension: 0.4,

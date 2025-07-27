@@ -35,7 +35,7 @@ const Profile_Nav = () => {
                             {navItems.map((item, index) => (
                                 <Link
                                     key={index}
-                                    className="w-full text-left px-4 py-2 rounded hover:text-white hover:bg-green-100 dark:hover:bg-green-700 transition-all"
+                                    className={`w-full text-left px-4 py-2 rounded hover:text-white ${theme ? 'hover:bg-green-100' : ' hover:bg-green-700'} transition-all`}
                                     to={item.to}
                                 >
                                     <i className={item.icon}></i> {item.label}
@@ -65,7 +65,7 @@ const Profile_Nav = () => {
                     </div>
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        className={`lg:hidden p-2 rounded-lg ${theme ? "hover:bg-gray-100" : "dark:hover:bg-gray-700"} transition-colors`}
                     >
                         <i className={`text-xl ${isMobileMenuOpen ? 'ri-close-line' : 'ri-menu-line'}`}></i>
                     </button>
@@ -79,7 +79,7 @@ const Profile_Nav = () => {
                         {navItems.map((item, index) => (
                             <Link
                                 key={index}
-                                className="w-full text-left px-4 py-3 rounded hover:text-white hover:bg-green-100 dark:hover:bg-green-700 transition-all"
+                                className={`w-full text-left px-4 py-3 rounded hover:text-white ${theme ? 'hover:bg-green-100' : 'dark:hover:bg-green-700'} transition-all`}
                                 to={item.to}
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >

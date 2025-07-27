@@ -154,7 +154,7 @@ const ExpensesData = () => {
                 placeholder="0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className={`pl-10 pr-4 py-4 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-green-100 dark:focus:ring-green-900 transition-all text-lg font-medium ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white' : 'border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
+                className={`pl-10 pr-4 py-4 rounded-xl border-2 focus:outline-none focus:ring-2 transition-all text-lg font-medium ${theme ? 'focus:ring-green-100 border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white' : 'focus:ring-green-900 border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
                 required
                 min="0"
                 step="0.01"
@@ -168,7 +168,7 @@ const ExpensesData = () => {
               <label className="text-sm font-semibold text-gray-600 dark:text-gray-300 block mb-2">Category *</label>
               <select 
                 value={category}
-                className={`w-full p-4 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-green-100 dark:focus:ring-green-900 transition-all text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white' : 'border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
+                className={`w-full p-4 rounded-xl border-2 focus:outline-none focus:ring-2 transition-all text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white focus:ring-green-100' : 'focus:ring-green-900 border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
                 onChange={(e) => setCategory(e.target.value)}
                 required
               >
@@ -189,7 +189,7 @@ const ExpensesData = () => {
               <input
                 type="date"
                 value={currentDate}
-                className={`w-full p-4 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-green-100 dark:focus:ring-green-900 transition-all text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white' : 'border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
+                className={`w-full p-4 rounded-xl border-2 focus:outline-none focus:ring-2 transition-all text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white focus:ring-green-100 ' : 'focus:ring-green-900 border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
                 onChange={(e) => setCurrDate(e.target.value)}
                 required
                 max={maxDate.split('T')[0]}
@@ -204,7 +204,7 @@ const ExpensesData = () => {
               rows="3"
               placeholder="Add a note about this expense..."
               value={note}
-              className={`p-4 rounded-xl border-2 focus:outline-none focus:ring-4 focus:ring-green-100 dark:focus:ring-green-900 transition-all resize-none text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white' : 'border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
+              className={`p-4 rounded-xl border-2 focus:outline-none focus:ring-2 transition-all resize-none text-base ${theme ? 'border-gray-200 bg-gray-50 text-dark focus:border-green-500 focus:bg-white focus:ring-green-100 ' : 'focus:ring-green-900 border-slate-600 bg-slate-800 text-white focus:border-green-400 focus:bg-slate-700'}`}
               onChange={(e) => setNote(e.target.value)}
             />
           </div>
@@ -213,7 +213,7 @@ const ExpensesData = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-8 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all font-semibold text-base shadow-lg hover:shadow-xl active:transform active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-8 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all font-semibold text-base shadow-lg hover:shadow-xl active:transform active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -297,7 +297,7 @@ const ExpensesData = () => {
           )}
         </div>
 
-        {expenses.length > 0 && (
+        {/* {expenses.length > 0 && (
           <div className="mt-6 text-center">
             <button 
               className={`px-6 py-3 rounded-xl text-sm font-medium transition-all border ${theme ? 'border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300' : 'border-slate-600 text-gray-400 hover:bg-slate-700 hover:border-slate-500'}`}
@@ -310,11 +310,11 @@ const ExpensesData = () => {
               Load More
             </button>
           </div>
-        )}
+        )} */}
       </div>
 
       {/* AI Suggestions - Enhanced */}
-      <div className={`w-full rounded-2xl shadow-lg p-4 sm:p-6 border transition-all duration-300 hover:shadow-xl ${theme ? 'bg-white text-[#0F172A] border-gray-100' : 'bg-[#1E293B] text-white border-slate-700'}`}>
+      {/* <div className={`w-full rounded-2xl shadow-lg p-4 sm:p-6 border transition-all duration-300 hover:shadow-xl ${theme ? 'bg-white text-[#0F172A] border-gray-100' : 'bg-[#1E293B] text-white border-slate-700'}`}>
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center">
             <span className="text-lg">💡</span>
@@ -380,7 +380,7 @@ const ExpensesData = () => {
           toastClassName="backdrop-blur-sm"
         />
 
-      </div>
+      </div> */}
     </div>
   );
 };
